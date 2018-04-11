@@ -1,0 +1,57 @@
+//题目要求：链接：https://www.nowcoder.com/questionTerminal/46e837a4ea9144f5ad2021658cb54c4d
+//来源：牛客网
+//难点在于注意时间复杂度，采用暴力破解时会造成程序运行时间过长。
+#include <iostream>
+#include "algorithm"
+using namespace std;
+struct E{
+    int Di;
+    int Pi;
+};
+struct P{
+    int index;
+    int money;
+    int Ai;
+};
+bool cmp1(E a,E b)
+{
+    return a.Di<b.Di;
+}
+bool cmp2(P a,P b){
+    return a.Ai<b.Ai;
+}
+bool cmp3(P a,P b){
+    return a.index<b.index;
+}
+int main(){
+    int  N,M;
+    cin>>N>>M;
+    struct E job[N];
+    struct P people[M];
+    for(int i=0;i<N;i++){//Di难度，Pi报酬
+        cin>>job[i].Di>>job[i].Pi;
+    }
+    for(int i=0;i<M;i++){
+        people[i].index=i;
+        people[i].money=0;//初始报酬为0
+        cin>>people[i].Ai;
+    }
+    sort(job,job+N,cmp1);//依照能力从低到高对工作进行排序
+    sort(people,people+M,cmp2);//对伙伴进行能力从低到高排序
+    int j=0,maxmoney=0;
+    for(int i=0;i<M;i++){//对每个伙伴的能力值进行比较，（j，maxmoney）表示前j项中最大报酬
+        while(j<N){
+            if(people[i].Ai<job[j].Di){
+                break;
+            }
+            maxmoney=max(maxmoney,job[j].Pi);
+            j++;
+        }
+        people[i].money=maxmoney;
+    }
+    sort(people,people+M,cmp3);
+    for(int i=0;i<M;i++){
+        cout<<people[i].money<<endl;
+    }
+    return 0;
+}
