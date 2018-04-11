@@ -1,0 +1,22 @@
+//链接：https://www.nowcoder.com/questionTerminal/51dcb4eef6004f6f8f44d927463ad5e8
+//来源：牛客网
+//分析数列的特点，发现规律：即第i个数的各位和为（1+2+..+i)
+#include <iostream>
+using namespace std;
+int main(){
+    int l,r;
+    cin>>l>>r;
+    long  number=0;
+    for(long i=0;i<=l;i++){
+        number+=i;
+    }
+    int cont=0;
+    for(long i=1;i<=(r-l+1);i++){//比较次数
+        if(number%3==0){
+            cont++;
+        }
+        number+=(l+i);
+    }
+    cout<<cont;
+    return 0;
+}
